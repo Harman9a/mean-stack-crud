@@ -9,6 +9,7 @@ import { DataService } from '../data.service';
 export class HomeComponent {
   dataList: any = [];
 
+  activeId: any = '';
   formName: string = '';
   formEmail: string = '';
 
@@ -38,6 +39,30 @@ export class HomeComponent {
 
     this.ds.deleteDataFromServer(data).subscribe((response: any) => {
       alert('deleted');
+      this.getData();
+    });
+  }
+
+  editUser(id: any) {
+    this.activeId = id;
+    this.dataList.map((x: any) => {
+      if (x._id == id) {
+        this.formName = x.name;
+        this.formEmail = x.email;
+      }
+    });
+  }
+
+  UpdateSubmit() {
+    let data = {
+      id: this.activeId,
+      name: this.formName,
+      email: this.formEmail,
+    };
+
+    this.ds.UpdateDataToServer(data).subscribe((response: any) => {
+      this.formName = '';
+      this.formEmail = '';
       this.getData();
     });
   }

@@ -56,3 +56,21 @@ app.post("/deleteData", async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
+
+app.post("/update", async (req, res) => {
+  try {
+    const { id } = req.body;
+    const users = await Users.findByIdAndUpdate(id, {
+      name: req.body.name,
+      email: req.body.email,
+    });
+    if (!users) {
+      return res
+        .status(404)
+        .json({ message: `cannot find any product with ID ${id}` });
+    }
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});

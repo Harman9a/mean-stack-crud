@@ -26,4 +26,10 @@ export class DataService {
       responseType: 'json',
     });
   }
+
+  UpdateDataToServer(data: any) {
+    return this.http.post(this.backendUrl + 'update', data, {
+      responseType: 'json',
+    });
+  }
 }
